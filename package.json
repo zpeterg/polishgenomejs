@@ -1,0 +1,23 @@
+{
+  "name": "polishgenomejs",
+  "version": "1.0.0",
+  "description": "Polish genome in-browser.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test_watch": "jest --watchAll"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/zpeterg/polishgenomejs"
+  },
+  "keywords": [
+    "genome",
+    "dna"
+  ],
+  "author": "Peter Granderson",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.5.0"
+  }
+}
