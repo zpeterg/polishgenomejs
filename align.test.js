@@ -1,5 +1,5 @@
 const sample = require('./sample1')
-const { formatItems, indent, compare, findMatchStart } = require('./align')
+const { addConsensusToFormat, formatItems, indent, compare, findMatchStart } = require('./align')
 
 describe('FindMatchStart', () => {
   test('find start', () => {
@@ -173,4 +173,30 @@ describe("FormatItems", () => {
 
     expect(formatItems(arr)).toEqual(res)
   })
+})
+
+describe('AddConsenusToFormat', () => {
+  const arr = [
+    [ null, 'A', null, null],
+    [ null, 'A', 'A', 'A'],
+    [ null, 'A', 'A', 'C'],
+    [ null, 'A', 'A', 'A'],
+    [ null, 'C', 'G', 'C'],
+    [ null, 'A', 'A', 'A'],
+    [ null, 'T', 'T', 'T'],
+    [ null, 'T', 'T', 'C'],
+    [ null, null, null, null],
+  ]
+  const res = [
+    [ null, 'A', null, null, 'A'],
+    [ null, 'A', 'A', 'A', 'A'],
+    [ null, 'A', 'A', 'C', 'A'],
+    [ null, 'A', 'A', 'A', 'A'],
+    [ null, 'C', 'G', 'C', 'C'],
+    [ null, 'A', 'A', 'A', 'A'],
+    [ null, 'T', 'T', 'T', 'T'],
+    [ null, 'T', 'T', 'C', 'T'],
+    [ null, null, null, null, null],
+  ]
+  expect(addConsensusToFormat(arr)).toEqual(res)
 })

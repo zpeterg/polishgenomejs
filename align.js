@@ -101,6 +101,23 @@ exports.formatItems = arr => {
   return rtn
 }
 
+exports.addConsensusToFormat = arr => {
+  return arr.map(x => {
+    // Get an array of counts - eg., [['A', 2], ['G', 1]]
+    const counts = []
+    x.map(item => {
+      const countsIndex = counts.findIndex(c => c[0] === item)
+      if (countsIndex > -1) counts[countsIndex][1]++
+      counts.push([item, 1])
+    })
+    // sort from most frequent to least
+    const sorted = counts.sort((a, b) => a[1] < b[1])
+    // only use 'null' if there is no 2nd option
+    x.push(sorted[0][0] === null && sorted.length > 1 ? sorted[1][0] : sorted[0][0])
+    return x
+  })
+}
+
 exports.indent = arr => {
   let comps = []
   for (let i=0; i<arr.length-1; i++){
