@@ -133,21 +133,23 @@ exports.align = (arr, maxErrorRate, searchLength) => {
     // If next item exists, compare this one to it
     if (arr[i+1]){
       const comparison = exports.compare(arr[i], arr[i+1], maxErrorRate, searchLength)
-      if (i === 0){
+      if (comparison.start){
+        if (i === 0){
+          comps.push({
+            data: arr[0],
+            indent: 0,
+            length: (arr[0].length + comparison.pad[0].length),
+            pad: comparison.pad[0],
+          })
+        }
+        const last = comps[comps.length-1]
         comps.push({
-          data: arr[0],
-          indent: 0,
-          length: (arr[0].length + comparison.pad[0].length),
-          pad: comparison.pad[0],
+          data: arr[i+1],
+          indent: last.indent + comparison.start[0] - comparison.start[1],
+          length: arr[i+1].length + comparison.pad[1].length,
+          pad: comparison.pad[1],
         })
       }
-      const last = comps[comps.length-1]
-      comps.push({
-        data: arr[i+1],
-        indent: last.indent + comparison.start[0] - comparison.start[1],
-        length: arr[i+1].length + comparison.pad[1].length,
-        pad: comparison.pad[1],
-      })
     }
   }
   return comps
