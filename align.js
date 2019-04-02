@@ -1,20 +1,20 @@
 
-exports.findMatchStart = (str1, str2) => {
+exports.findMatchStart = (str1, str2, searchLength=6) => {
   const str1Length = str1.length
-  // Work with only the first piece of second str
-  const str2StartPiece = str2.substr(0, 18)
+  // Work with only the first piece of second str (three-times the search-length to allow some errors)
+  const str2StartPiece = str2.substr(0, searchLength*3)
   let indexNum = -1
 
   // Loop, with buffer on either end
-  for (let i=0; i<str1Length-1; i = i+6){
-    const thisStr1 = str1.substr(i, 6)
+  for (let i=0; i<str1Length-1; i = i+searchLength){
+    const thisStr1 = str1.substr(i, searchLength)
     // Look in beginning of str2 for a match
     indexNum = str2StartPiece.indexOf(thisStr1)
   }
   if (indexNum > -1) {
     // Back up a few and loop individually to find the match
-    for (let i=indexNum-3; i<str1Length-3; i++){
-      const nextFew1 = str1.substr(i, 6)
+    for (let i=indexNum-(searchLength/2); i<str1Length-(searchLength/2); i++){
+      const nextFew1 = str1.substr(i, searchLength)
       const indexStr2Num = str2StartPiece.indexOf(nextFew1)
       if (indexStr2Num > -1) {
         return [i, indexStr2Num]
@@ -24,13 +24,13 @@ exports.findMatchStart = (str1, str2) => {
   return []
 }
 
-exports.compare = (str1, str2) => {
+exports.compare = (str1, str2, maxErrorRate=0.2, searchLength) => {
   let errors = 0
-  let matching = false
-  let rtn = []
   let pad = [[], []]
 
   const matchStart = exports.findMatchStart(str1, str2)
+  const allowErrors = Math.round(str1.length * maxErrorRate)
+
   if (matchStart.length !== 0){
     // Trim the strings
     str1 = str1.substr(matchStart[0])
@@ -38,7 +38,7 @@ exports.compare = (str1, str2) => {
     // Count the offset of 2nd string as error
     errors = matchStart[1]
   
-    for (let i=0; i<(str1.length+pad[0].length) && errors < 5; i++){
+    for (let i=0; i<(str1.length+pad[0].length) && errors < allowErrors; i++){
       const totalPad = pad[0].length
       const TOTALPAD = pad[1].length
       // Account for padding (invert it to keep it corresponding to the other track)
@@ -95,7 +95,6 @@ exports.formatItems = arr => {
   let rtn = []
   for (let i=0; i<totalLength-1; i++){
     rtn.push(arr.map(x => {
-      //console.log('......', x)
       // If within the span of this data set...
       if (i > x.indent && i < x.indent + x.length) {
         // Print item 
@@ -127,12 +126,12 @@ exports.addConsensusToFormat = arr => {
   })
 }
 
-exports.align = arr => {
+exports.align = (arr, maxErrorRate, searchLength) => {
   let comps = []
   for (let i=0; i<arr.length-1; i++){
     // If next item exists, compare this one to it
     if (arr[i+1]){
-      const comparison = exports.compare(arr[i], arr[i+1])
+      const comparison = exports.compare(arr[i], arr[i+1], maxErrorRate, searchLength)
       if (i === 0){
         comps.push({
           data: arr[0],

@@ -8,12 +8,19 @@ module.exports = (data, options = {}, step = 100) => {
 
   // Retrieve the quality by step
   let rtn = fragmentByLine(data)
-  if (step <= 0) rtn = filterByLength(data)
-  if (step = 1) rtn = filterByQuality(data)
-  if (step = 2) rtn = align(data)
-  if (step >= 3) rtn = createConsensus(data)
-  // If aligned (2/3), format normally
-  if (step >=2) return formatItems(data)
+  if (step <= 0) rtn = filterByLength(rtn, options.minLength)
+  if (step >= 1) rtn = filterByQuality(rtn, options.minQuality)
+
+  // Not aligned
   // If not aligned (0/1), format with score as 2nd column
-  return formatPreAlign
+  if (step <= 1) return formatPreAlign(rtn)
+
+  // Aligned
+  if (step >= 2) rtn = formatItems(align(rtn.map(x => x.data)))
+
+  // If only aligned/formatted (2), stop there
+  if (step === 2) return rtn
+ 
+  // If aligned/formatted/consensus (3), return that
+  return addConsensusToFormat(rtn)
 }

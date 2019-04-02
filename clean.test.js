@@ -38,6 +38,10 @@ describe('Clean', () => {
       const arr = [
         {
           data: 'GATTT',
+          score: "!!\"!!",
+        },
+        {
+          data: 'GATTT',
           score: "!''*(",
         },
         {
@@ -49,10 +53,12 @@ describe('Clean', () => {
         {
           data: 'GATTT',
           quality: 5.6,
+          score: "!''*(",
         },
         {
           data: 'AAGCA',
           quality: 6,
+          score: ")%%%+",
         },
       ]
       expect(filterByQuality(arr, 5)).toEqual(res)

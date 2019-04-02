@@ -28,6 +28,7 @@ exports.filterByQuality = (arr, minQuality) => {
       rtn.push({
         data: x.data,
         quality,
+        score: x.score,
       })
     }
   })
