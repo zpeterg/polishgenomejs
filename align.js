@@ -90,9 +90,10 @@ exports.formatPreAlign = arr => {
 }
 
 exports.formatItems = arr => {
+  let rtn = []
+  if (arr.length <= 0) return rtn
   const lastItem = arr[arr.length-1]
   const totalLength = lastItem.indent + lastItem.length
-  let rtn = []
   for (let i=0; i<totalLength-1; i++){
     rtn.push(arr.map(x => {
       // If within the span of this data set...
