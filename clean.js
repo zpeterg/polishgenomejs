@@ -1,7 +1,7 @@
 
 const qualityScore = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
 
-exports.FragmentByLine = arr => {
+exports.fragmentByLine = arr => {
   return arr.map(str => {
     arr = str.split('\n')
     return {
@@ -11,12 +11,12 @@ exports.FragmentByLine = arr => {
   })
 }
 
-exports.FilterByLength = (arr, minLength) => {
+exports.filterByLength = (arr, minLength) => {
   return arr.filter(x => x.data.length > minLength)
 }
 
 // Filter by quality, and return objects with 
-exports.FilterByQuality = (arr, minQuality) => {
+exports.filterByQuality = (arr, minQuality) => {
   let rtn = []
   arr.map(x => {
     let total = 0

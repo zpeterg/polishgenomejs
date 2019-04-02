@@ -1,4 +1,4 @@
-const { FilterByLength, FilterByQuality, FragmentByLine } = require('./clean')
+const { filterByLength, filterByQuality, fragmentByLine } = require('./clean')
 
 describe('Clean', () => {
   describe('FragmentByLine', () => {
@@ -14,7 +14,7 @@ describe('Clean', () => {
           score: 'and this',
         },
       ]
-      expect(FragmentByLine(str)).toEqual(res)
+      expect(fragmentByLine(str)).toEqual(res)
     })
   })
 
@@ -29,7 +29,7 @@ describe('Clean', () => {
         { data: 'my name is', score: 'Ishmael'},
         { data: 'once upon a time', score: 'in a land'}
       ]
-      expect(FilterByLength(arr, 5)).toEqual(res)
+      expect(filterByLength(arr, 5)).toEqual(res)
     })
   })
 
@@ -55,7 +55,7 @@ describe('Clean', () => {
           quality: 6,
         },
       ]
-      expect(FilterByQuality(arr, 5)).toEqual(res)
+      expect(filterByQuality(arr, 5)).toEqual(res)
     })
   })
 })

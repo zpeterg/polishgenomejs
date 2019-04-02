@@ -1,5 +1,4 @@
-const sample = require('./sample1')
-const { addConsensusToFormat, formatItems, indent, compare, findMatchStart } = require('./align')
+const { addConsensusToFormat, formatPreAlign, formatItems, align, compare, findMatchStart } = require('./align')
 
 describe('FindMatchStart', () => {
   test('find start', () => {
@@ -67,7 +66,7 @@ describe('Compare', () => {
   })
 })
 
-describe('Indent', () => {
+describe('Align', () => {
   test('indent three items', () => {
     const arr = [
       'AATAAAAACATTTGGCACCCACCTATGATTTAATTTTTAGA',
@@ -80,7 +79,27 @@ describe('Indent', () => {
       {"data": "AAACATTGAAATATCAAAGTGAAGTAGCCCA", "indent": 49, "length": 31, pad: []},
     ]
 
-    expect(indent(arr)).toEqual(res)
+    expect(align(arr)).toEqual(res)
+  })
+})
+
+describe('FormatPreAlign', () => {
+  test('format filtered (not Aligned) to columns', () => {
+    const arr = [
+      { data: 'AA', score: '#%' },
+      { data: 'GC', score: '\'!' }
+    ]
+    const res = [
+      [
+        ['A', '#'],
+        ['A', '%'],
+      ],
+      [
+        ['G', '\''],
+        ['C', '!'],
+      ],
+    ]
+    expect(formatPreAlign(arr)).toEqual(res)
   })
 })
 

@@ -79,6 +79,16 @@ exports.compare = (str1, str2) => {
   return { errors }
 }
 
+exports.formatPreAlign = arr => {
+  return arr.map(x => {
+    let thisRtn = []
+    for (let i=0; i<x.data.length; i++){
+      thisRtn.push([x.data[i], x.score[i]])
+    }
+    return thisRtn
+  })
+}
+
 exports.formatItems = arr => {
   const lastItem = arr[arr.length-1]
   const totalLength = lastItem.indent + lastItem.length
@@ -89,7 +99,6 @@ exports.formatItems = arr => {
       // If within the span of this data set...
       if (i > x.indent && i < x.indent + x.length) {
         // Print item 
-        // TODO: make this account for padding
         const thisI = i - x.indent - 1
         const padding = x.pad.filter(p => p < thisI).length
         const thisIsPadded = x.pad.indexOf(thisI) > -1
@@ -118,7 +127,7 @@ exports.addConsensusToFormat = arr => {
   })
 }
 
-exports.indent = arr => {
+exports.align = arr => {
   let comps = []
   for (let i=0; i<arr.length-1; i++){
     // If next item exists, compare this one to it
