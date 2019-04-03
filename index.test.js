@@ -9,7 +9,7 @@ describe('Index', () => {
     "\nGAAGTAGCCCAAGTTAGGTTGAAGTCGG\n((((***+))%%%++)(%%%%).1***-+*''))**55CCF>>",
   ]
   test('should parse an array of strings', () => {
-    const res = [ [ 'A', null, null, null, 'A' ],
+    const res = [ [ [ 'A', null, null, null, 'A' ],
     [ 'A', null, null, null, 'A' ],
     [ 'T', null, null, null, 'T' ],
     [ 'A', null, null, null, 'A' ],
@@ -105,7 +105,7 @@ describe('Index', () => {
     [ null, null, null, 'T', 'T' ],
     [ null, null, null, 'C', 'C' ],
     [ null, null, null, 'G', 'G' ],
-    [ null, null, null, 'G', 'G' ] ]
+    [ null, null, null, 'G', 'G' ] ] ]
 
     expect(polish(arr, { minQuality: 2, searchLength: 7 })).toEqual(res)
   })

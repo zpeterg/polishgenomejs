@@ -20,8 +20,8 @@ module.exports = (data, options = {}, step = 100) => {
   if (step >= 2) rtn = formatItems(aligned)
 
   // If only aligned/formatted (2), stop there
-  if (step === 2) return rtn
+  if (step === 2) return [rtn]
  
   // If aligned/formatted/consensus (3), return that
-  return addConsensusToFormat(rtn)
+  return [addConsensusToFormat(rtn)]
 }
