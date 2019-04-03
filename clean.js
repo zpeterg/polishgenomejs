@@ -30,6 +30,8 @@ exports.filterByQuality = (arr, minQuality) => {
         quality,
         score: x.score,
       })
+    } else {
+      console.log('failed the quality test by ', quality, minQuality)
     }
   })
   return rtn

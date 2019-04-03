@@ -110,7 +110,7 @@ describe("FormatItems", () => {
       {"data": "GATTTAATTTTTTAGAAATTTAGAAACATTGAAATATCAA", "indent": 26, "length": 40, pad: []},
       {"data": "AAACATTGAGATATCAAAGTGAAGTAGCCCA", "indent": 49, "length": 31, pad: []},
     ]
-    const res = [ [ null, null, null ],
+    const res = [ 
     [ 'A', null, null ],
     [ 'A', null, null ],
     [ 'T', null, null ],
@@ -152,7 +152,7 @@ describe("FormatItems", () => {
     [ null, 'T', null ],
     [ 'A', 'A', null ],
     [ 'G', 'G', null ],
-    [ null, 'A', null ],
+    [ 'A', 'A', null ],
     [ null, 'A', null ],
     [ null, 'A', null ],
     [ null, 'T', null ],
@@ -176,7 +176,7 @@ describe("FormatItems", () => {
     [ null, 'T', 'T' ],
     [ null, 'C', 'C' ],
     [ null, 'A', 'A' ],
-    [ null, null, 'A' ],
+    [ null, 'A', 'A' ],
     [ null, null, 'A' ],
     [ null, null, 'G' ],
     [ null, null, 'T' ],
@@ -188,34 +188,63 @@ describe("FormatItems", () => {
     [ null, null, 'A' ],
     [ null, null, 'G' ],
     [ null, null, 'C' ],
-    [ null, null, 'C' ] ]
+    [ null, null, 'C' ],
+    [ null, null, 'C' ],
+    [ null, null, 'A' ],
+   ]
 
     expect(formatItems(arr)).toEqual(res)
   })
 })
 
 describe('AddConsenusToFormat', () => {
-  const arr = [
-    [ null, 'A', null, null],
-    [ null, 'A', 'A', 'A'],
-    [ null, 'A', 'A', 'C'],
-    [ null, 'A', 'A', 'A'],
-    [ null, 'C', 'G', 'C'],
-    [ null, 'A', 'A', 'A'],
-    [ null, 'T', 'T', 'T'],
-    [ null, 'T', 'T', 'C'],
-    [ null, null, null, null],
-  ]
-  const res = [
-    [ null, 'A', null, null, 'A'],
-    [ null, 'A', 'A', 'A', 'A'],
-    [ null, 'A', 'A', 'C', 'A'],
-    [ null, 'A', 'A', 'A', 'A'],
-    [ null, 'C', 'G', 'C', 'C'],
-    [ null, 'A', 'A', 'A', 'A'],
-    [ null, 'T', 'T', 'T', 'T'],
-    [ null, 'T', 'T', 'C', 'T'],
-    [ null, null, null, null, null],
-  ]
-  expect(addConsensusToFormat(arr)).toEqual(res)
+  test('should get consensus with nulls', () => {
+    const arr = [
+      [ null, 'A', null, null],
+      [ null, 'A', 'A', 'A'],
+      [ null, 'A', 'A', 'C'],
+      [ null, 'A', 'A', 'A'],
+      [ null, 'C', 'G', 'C'],
+      [ null, 'A', 'A', 'A'],
+      [ null, 'T', 'T', 'T'],
+      [ null, 'T', 'T', 'C'],
+      [ null, null, null, null],
+    ]
+    const res = [
+      [ null, 'A', null, null, 'A'],
+      [ null, 'A', 'A', 'A', 'A'],
+      [ null, 'A', 'A', 'C', 'A'],
+      [ null, 'A', 'A', 'A', 'A'],
+      [ null, 'C', 'G', 'C', 'C'],
+      [ null, 'A', 'A', 'A', 'A'],
+      [ null, 'T', 'T', 'T', 'T'],
+      [ null, 'T', 'T', 'C', 'T'],
+      [ null, null, null, null, null],
+    ]
+    expect(addConsensusToFormat(arr)).toEqual(res)
+  })
+  test('should get consensus with last working', () => {
+    const arr = [
+      [ null, 'A', null, null],
+      [ null, 'A', 'A', 'A'],
+      [ null, 'A', 'A', 'C'],
+      [ null, 'A', 'A', 'A'],
+      [ null, 'C', 'G', 'C'],
+      [ null, 'A', 'A', 'A'],
+      [ null, null, null, 'T'],
+      [ null, null, null, 'C'],
+      [ null, null, null, null],
+    ]
+    const res = [ [ null, 'A', null, null, 'A' ],
+        [ null, 'A', 'A', 'A', 'A' ],
+        [ null, 'A', 'A', 'C', 'A' ],
+        [ null, 'A', 'A', 'A', 'A' ],
+        [ null, 'C', 'G', 'C', 'C' ],
+        [ null, 'A', 'A', 'A', 'A' ],
+        [ null, null, null, 'T', 'T' ],
+        [ null, null, null, 'C', 'C' ],
+        [ null, null, null, null, null ] ]
+
+    expect(addConsensusToFormat(arr)).toEqual(res)
+  })
 })

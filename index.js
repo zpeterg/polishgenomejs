@@ -11,13 +11,13 @@ module.exports = (data, options = {}, step = 100) => {
   let rtn = fragmentByLine(data)
   if (step <= 0) rtn = filterByLength(rtn, options.minLength)
   if (step >= 1) rtn = filterByQuality(rtn, options.minQuality)
-
   // Not aligned
   // If not aligned (0/1), format with score as 2nd column
   if (step <= 1) return formatPreAlign(rtn)
-
+  
   // Aligned
-  if (step >= 2) rtn = formatItems(align(rtn.map(x => x.data), options.maxErrorRate, options.searchLength))
+  const aligned = align(rtn.map(x => x.data), options.maxErrorRate, options.searchLength)
+  if (step >= 2) rtn = formatItems(aligned)
 
   // If only aligned/formatted (2), stop there
   if (step === 2) return rtn

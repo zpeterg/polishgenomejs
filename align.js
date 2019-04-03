@@ -94,10 +94,10 @@ exports.formatItems = arr => {
   if (arr.length <= 0) return rtn
   const lastItem = arr[arr.length-1]
   const totalLength = lastItem.indent + lastItem.length
-  for (let i=0; i<totalLength-1; i++){
+  for (let i=1; i<totalLength+1; i++){
     rtn.push(arr.map(x => {
       // If within the span of this data set...
-      if (i > x.indent && i < x.indent + x.length) {
+      if (i > x.indent && i < x.indent + x.length + 1) {
         // Print item 
         const thisI = i - x.indent - 1
         const padding = x.pad.filter(p => p < thisI).length
@@ -116,8 +116,9 @@ exports.addConsensusToFormat = arr => {
     const counts = []
     x.map(item => {
       const countsIndex = counts.findIndex(c => c[0] === item)
+      // If is already in the count-list, add it
       if (countsIndex > -1) counts[countsIndex][1]++
-      counts.push([item, 1])
+      else counts.push([item, 1])
     })
     // sort from most frequent to least
     const sorted = counts.sort((a, b) => a[1] < b[1])
