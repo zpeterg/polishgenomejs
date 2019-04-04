@@ -9,7 +9,7 @@ module.exports = (data, options = {}, step = 100) => {
 
   // Retrieve the quality by step
   let rtn = fragmentByLine(data)
-  if (step <= 0) rtn = filterByLength(rtn, options.minLength)
+  if (step >= 0) rtn = filterByLength(rtn, options.minLength)
   if (step >= 1) rtn = filterByQuality(rtn, options.minQuality)
   // Not aligned
   // If not aligned (0/1), format with score as 2nd column
