@@ -144,12 +144,14 @@ exports.align = (arr, maxErrorRate, searchLength) => {
           })
         }
         const last = comps[comps.length-1]
-        comps.push({
-          data: arr[i+1],
-          indent: last.indent + comparison.start[0] - comparison.start[1],
-          length: arr[i+1].length + comparison.pad[1].length,
-          pad: comparison.pad[1],
-        })
+        if (last) {
+          comps.push({
+            data: arr[i+1],
+            indent: last.indent + comparison.start[0] - comparison.start[1],
+            length: arr[i+1].length + comparison.pad[1].length,
+            pad: comparison.pad[1],
+          })
+        }
       }
     }
   }
