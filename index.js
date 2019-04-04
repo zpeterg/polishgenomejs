@@ -2,10 +2,10 @@ const { fragmentByLine, filterByLength, filterByQuality } = require('./clean')
 const { align, formatPreAlign, formatItems, addConsensusToFormat } = require('./align')
 
 module.exports = (data, options = {}, step = 100) => {
-  if (typeof options.minLength === 'undefined') options.minLength = 20
-  if (typeof options.minQuality === 'undefined') options.minQuality = 10
-  if (typeof options.maxErrorRate === 'undefined') options.maxErrorRate = 0.2
-  if (typeof options.searchLength === 'undefined') options.searchLength = 5
+  options.minLength = (typeof options.minLength === 'undefined') ? 20 : +options.minLength
+  options.minQuality = (typeof options.minQuality === 'undefined') ? 10 : +options.minQuality
+  options.maxErrorRate = (typeof options.maxErrorRate === 'undefined') ? 0.2 : +options.maxErrorRate
+  options.searchLength = (typeof options.searchLength === 'undefined') ? 6 : +options.searchLength
 
   // Retrieve the quality by step
   let rtn = fragmentByLine(data)
