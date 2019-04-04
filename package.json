@@ -1,6 +1,6 @@
 {
   "name": "polishgenomejs",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Polish genome in-browser.",
   "main": "index.js",
   "scripts": {

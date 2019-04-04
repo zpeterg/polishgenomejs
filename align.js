@@ -28,7 +28,7 @@ exports.compare = (str1, str2, maxErrorRate=0.2, searchLength) => {
   let errors = 0
   let pad = [[], []]
 
-  const matchStart = exports.findMatchStart(str1, str2)
+  const matchStart = exports.findMatchStart(str1, str2, searchLength)
   const allowErrors = Math.round(str1.length * maxErrorRate)
 
   if (matchStart.length !== 0){
